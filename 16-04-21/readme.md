@@ -70,20 +70,17 @@ app.post('/update', (req, res) => {
     })
 });
 
-app.post('/update', (req, res) => {
+app.post('/delete', (req, res) => {
     var old = {
         name: req.body.oname,
-    }
-    var post = {
-        name: req.body.name,
-        time: req.body.time,
     }
     MongoClient.connect(url, (err, client) => {
 
         if (err) throw err
         db = client.db('demo');
-        db.collection('todo').update(old, post, (err, res) => {
+        db.collection('todo').deleteOne(old, (err, res) => {
             if (err) throw err;
+
             client.close();
         })
     })
